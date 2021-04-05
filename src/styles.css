@@ -1,0 +1,43 @@
+/* You can add global styles to this file, and also import other style files */
+a {
+  cursor: pointer;
+}
+
+html,
+body {
+  height: 100%;
+  background: rgb(194,190,255);
+background: linear-gradient(90deg, rgba(194,190,255,1) 0%, rgba(212,83,226,1) 35%, rgba(83,226,255,1) 100%);
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.router-container {
+  display: flex;
+  height: 92%;
+}
+
+.h-8 {
+  height: 8%;
+}
+
+button:focus {
+  outline: none;
+}
+
+.login-box {
+  padding: 15px 0px;
+  height: 100vh;
+  align-items: center;
+  display: flex;
+}
+
+.b-white {
+  background: white;
+}
+
+.border-0 {
+  border-radius: 0px !important;
+}

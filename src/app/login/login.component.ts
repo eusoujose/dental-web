@@ -8,8 +8,6 @@ import { AuthenticationService } from '@app/_services';
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
-    loading = false;
-    submitted = false;
     error = '';
 
     constructor(
@@ -17,33 +15,23 @@ export class LoginComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService
-    ) { 
+    ) {
         // redirect to home if already logged in
-        if (this.authenticationService.currentUserValue) { 
+        if (this.authenticationService.currentUserValue) {
             this.router.navigate(['/']);
         }
     }
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
-            username: ['', Validators.required],
+            email: ['', Validators.required],
             password: ['', Validators.required]
         });
     }
 
-    // convenience getter for easy access to form fields
-    get f() { return this.loginForm.controls; }
 
     onSubmit() {
-        this.submitted = true;
-
-        // stop here if form is invalid
-        if (this.loginForm.invalid) {
-            return;
-        }
-
-        this.loading = true;
-        this.authenticationService.login(this.f.username.value, this.f.password.value)
+        this.authenticationService.login(this.loginForm.value)
             .pipe(first())
             .subscribe({
                 next: () => {
@@ -53,8 +41,16 @@ export class LoginComponent implements OnInit {
                 },
                 error: error => {
                     this.error = error;
-                    this.loading = false;
                 }
             });
     }
+
+
+  getEmailErrorMessage(): string {
+    if (this.loginForm.controls.email.hasError('required')) {
+      return 'Email é obrigatório';
+    }
+
+    return this.loginForm.controls.email.hasError('email') ? 'Email inválido' : '';
+  }
 }
